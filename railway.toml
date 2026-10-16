@@ -1,0 +1,13 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+healthcheckPath = "/healthz"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
+# The volume holds a live Postgres cluster: exactly one replica, and stop the old one first.
+numReplicas = 1
+overlapSeconds = 0
+drainingSeconds = 30

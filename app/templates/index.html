@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PST Search</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body data-chunk-mb="{{ chunk_mb }}">
+<header>
+  <h1>PST Search</h1>
+  <span class="muted" id="stats"></span>
+</header>
+
+<main>
+  <section class="panel" id="upload-panel">
+    <h2>Archives</h2>
+    <div class="upload-row">
+      <label class="button" for="file-input">Upload .pst</label>
+      <input type="file" id="file-input" accept=".pst,.ost" hidden>
+      <div id="upload-progress" hidden>
+        <span id="upload-name"></span>
+        <progress id="upload-bar" max="100" value="0"></progress>
+        <span id="upload-pct"></span>
+      </div>
+    </div>
+    <table id="archives">
+      <thead><tr><th>File</th><th>Size</th><th>Status</th><th>Progress</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p class="muted" id="no-archives" hidden>No archives yet. Upload a .pst file to start.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Search</h2>
+    <form id="search-form">
+      <input type="search" id="q" placeholder="Search emails and attachments, e.g. pipeline capacity agreement" autocomplete="off" required>
+      <button type="submit">Search</button>
+      <details>
+        <summary>Filters</summary>
+        <div class="filters">
+          <label>Archive <select id="f-archive"><option value="">All</option></select></label>
+          <label>Sender <input id="f-sender" placeholder="name@domain"></label>
+          <label>From <input type="date" id="f-from"></label>
+          <label>To <input type="date" id="f-to"></label>
+          <label>In <select id="f-source">
+            <option value="">Emails and attachments</option>
+            <option value="EMAIL_BODY">Email bodies</option>
+            <option value="ATTACHMENT">Attachments</option>
+          </select></label>
+          <label>Mode <select id="f-mode">
+            <option value="hybrid">Hybrid</option>
+            <option value="keyword">Keyword only</option>
+            <option value="semantic">Semantic only</option>
+          </select></label>
+        </div>
+      </details>
+    </form>
+    <p class="muted" id="result-meta"></p>
+    <ol id="results"></ol>
+  </section>
+</main>
+
+<dialog id="email-dialog">
+  <article>
+    <header class="dialog-head">
+      <h3 id="d-subject"></h3>
+      <button type="button" class="close" id="d-close" aria-label="Close">×</button>
+    </header>
+    <dl id="d-meta"></dl>
+    <div id="d-attachments"></div>
+    <div class="tabs" id="d-tabs" hidden>
+      <button type="button" data-tab="text" class="active">Text</button>
+      <button type="button" data-tab="html">HTML</button>
+    </div>
+    <pre id="d-body"></pre>
+    <iframe id="d-html" sandbox="" referrerpolicy="no-referrer" hidden title="HTML body"></iframe>
+  </article>
+</dialog>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
